@@ -18,11 +18,11 @@ from models.TransBTS.TransBTS_downsample8x_skipconnection import TransBTS
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--user', default='name of user', type=str)
+parser.add_argument('--user', default='yuy', type=str)
 
-parser.add_argument('--root', default='path to testing set', type=str)
+parser.add_argument('--root', default='/home/yuy/Project/MIP_term_Proj/TransBTS/data', type=str)
 
-parser.add_argument('--valid_dir', default='Valid', type=str)
+parser.add_argument('--valid_dir', default='MICCAI_BraTS2020_ValidationData', type=str)
 
 parser.add_argument('--valid_file', default='valid.txt', type=str)
 
@@ -32,11 +32,11 @@ parser.add_argument('--submission', default='submission', type=str)
 
 parser.add_argument('--visual', default='visualization', type=str)
 
-parser.add_argument('--experiment', default='', type=str)
+parser.add_argument('--experiment', default='TransBTS', type=str)
 
-parser.add_argument('--test_date', default='', type=str)
+parser.add_argument('--test_date', default='2021-12-16', type=str)
 
-parser.add_argument('--test_file', default='', type=str)
+parser.add_argument('--test_file', default='model_epoch_last.pth', type=str)
 
 parser.add_argument('--use_TTA', default=True, type=bool)
 

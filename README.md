@@ -1,5 +1,7 @@
 # TransBTS: Multimodal Brain Tumor Segmentation Using Transformer（MICCAI2021）
-This repo is the official implementation for [TransBTS: Multimodal Brain Tumor Segmentation Using Transformer](https://arxiv.org/pdf/2103.04430.pdf). The multimodal brain tumor datasets (BraTS 2019 & BraTS 2020) could be acquired from [here](https://ipp.cbica.upenn.edu/).
+This repo is the official implementation for [TransBTS: Multimodal Brain Tumor Segmentation Using Transformer](https://arxiv.org/pdf/2103.04430.pdf). The multimodal brain tumor datasets (BraTS 2019 & BraTS 2020) could be acquired from [here](https://ipp.cbica.upenn.edu/).  
+
+Update (2021/12/16): apply gradient accumulation for limited sources.  
 
 ## TransBTS
 ![TransBTS](https://github.com/Wenxuan-1119/TransBTS/blob/main/figure/TransBTS.PNG "TransBTS")
@@ -20,7 +22,15 @@ After downloading the dataset from [here](https://ipp.cbica.upenn.edu/), data pr
 ## Training
 Run the training script on BraTS dataset. Distributed training is available for training the proposed TransBTS, where --nproc_per_node decides the numer of gpus and --master_port implys the port number.
 
-`python3 -m torch.distributed.launch --nproc_per_node=4 --master_port 20003 train.py`
+`python3 -m torch.distributed.launch --nproc_per_node=4 --master_port 20003 train.py`   
+  
+Training with gradient accumulation:   
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 8` (2021-12-16)
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 16` (2021-12-20)
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 32` (2021-12-22)   
+  
+Quick notes for tmux usage:  
+attach: `tmux attach -t [session]`, list: `tmux ls`, detach: ctrl+B then D
 
 ## Testing 
 If  you want to test the model which has been trained on the BraTS dataset, run the testing script as following.

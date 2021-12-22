@@ -7,14 +7,14 @@ modalities = ('flair', 't1ce', 't1', 't2')
 
 # train
 train_set = {
-        'root': 'path to training set',
-        'flist': 'all.txt',
+        'root': '/home/yuy/Project/MIP_term_Proj/TransBTS/data/MICCAI_BraTS2020_TrainingData',
+        'flist': 'train.txt',
         'has_label': True
         }
 
 # test/validation data
 valid_set = {
-        'root': 'path to validation set',
+        'root': '/home/yuy/Project/MIP_term_Proj/TransBTS/data/MICCAI_BraTS2020_ValidationData',
         'flist': 'valid.txt',
         'has_label': False
         }

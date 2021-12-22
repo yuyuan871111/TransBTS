@@ -230,5 +230,7 @@ def validate_softmax(
                         # scipy.misc.imsave(os.path.join(visual, name, str(frame)+'.png'), Snapshot_img[:, :, :, frame])
                         imageio.imwrite(os.path.join(visual, name, str(frame)+'.png'), Snapshot_img[:, :, :, frame])
 
-
-    print('runtimes:', sum(runtimes)/len(runtimes))
+    try:
+        print('runtimes:', sum(runtimes)/len(runtimes))
+    except Exception as e:
+        print(e)

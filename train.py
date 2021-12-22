@@ -27,7 +27,7 @@ local_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
 parser = argparse.ArgumentParser()
 
 # Basic Information
-parser.add_argument('--user', default='name of user', type=str)
+parser.add_argument('--user', default='yuy', type=str)
 
 parser.add_argument('--experiment', default='TransBTS', type=str)
 
@@ -39,11 +39,11 @@ parser.add_argument('--description',
                     type=str)
 
 # DataSet Information
-parser.add_argument('--root', default='path to training set', type=str)
+parser.add_argument('--root', default='/home/yuy/Project/MIP_term_Proj/TransBTS/data', type=str)
 
-parser.add_argument('--train_dir', default='Train', type=str)
+parser.add_argument('--train_dir', default='MICCAI_BraTS2020_TrainingData', type=str)
 
-parser.add_argument('--valid_dir', default='Valid', type=str)
+parser.add_argument('--valid_dir', default='MICCAI_BraTS2020_ValidationData', type=str)
 
 parser.add_argument('--mode', default='train', type=str)
 
@@ -91,6 +91,8 @@ parser.add_argument('--gpu', default='0,1,2,3', type=str)
 parser.add_argument('--num_workers', default=8, type=int)
 
 parser.add_argument('--batch_size', default=8, type=int)
+
+parser.add_argument('--gradient_accumulations', default=1, type=int, help='gradient accumulations')
 
 parser.add_argument('--start_epoch', default=0, type=int)
 
@@ -200,9 +202,14 @@ def main_worker():
                 logging.info('Epoch: {}_Iter:{}  loss: {:.5f} || 1:{:.4f} | 2:{:.4f} | 3:{:.4f} ||'
                              .format(epoch, i, reduce_loss, reduce_loss1, reduce_loss2, reduce_loss3))
 
-            optimizer.zero_grad()
-            loss.backward()
-            optimizer.step()
+            (loss / args.gradient_accumulations).backward()
+            if (i + 1) % args.gradient_accumulations == 0:
+                optimizer.step()
+                model.zero_grad()
+            
+            #optimizer.zero_grad()
+            #loss.backward()
+            #optimizer.step()
 
         end_epoch = time.time()
         if args.local_rank == 0:
