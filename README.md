@@ -25,9 +25,9 @@ Run the training script on BraTS dataset. Distributed training is available for 
 `python3 -m torch.distributed.launch --nproc_per_node=4 --master_port 20003 train.py`   
   
 Training with gradient accumulation:   
-`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 8` (2021-12-16)
-`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 16` (2021-12-20)
-`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 32` (2021-12-22)   
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 8` (2021-12-16)  
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 16` (2021-12-20)  
+`python3 -m torch.distributed.launch --nproc_per_node=1 --master_port 6006 train.py --gpu 0 --end_epoch 150 --batch_size 1 --gradient_accumulations 32` (2021-12-22)     
   
 Quick notes for tmux usage:  
 attach: `tmux attach -t [session]`, list: `tmux ls`, detach: ctrl+B then D
